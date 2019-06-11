@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Arduino - VueJS</title>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col s8">
+                <h4>Estado de Pines ARDUINO</h4>
+
+                <div class="col s4">
+                    <form class="" @submit.prevent="sentData" method="get">
+                        <button id="btn7" class="waves-effect waves-light btn" type="submit" style="">
+                            <i class="material-icons left">flash_on</i> Binary: <span>{{LEDestado.estadoLED2}}</span>
+                        </button>
+                    </form>
+
+                    <form class="" @submit.prevent="sentData2" method="get">
+                        <button id="btn7" class="waves-effect waves-light btn" type="submit" style="">
+                            <i class="material-icons left">flash_on</i> Binary: <span>{{LEDestado.estadoLED3}}</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="col s8">
+                    <ul class="collection">
+                        <li v-for='item in LEDestado' class="collection-item">{{item}}</li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col s4">
+                <h4>JSON</h4>
+                <pre>{{$data}}</pre>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.5.1/vue-resource.min.js"></script>
+
+    <script type="text/javascript">
+
+        //urlData = 'https://randomuser.me/api/?results=7';
+        urlData = 'http://192.168.0.7/leer';
+        new Vue({
+            el: '#main',
+            created: function () {
+                this.getData();
+            },
+            data: {
+                LEDestado: [],
+            },
+            methods: {
+                getData: function () {
+                    this.$http.get(urlData).then(function (response) {
+                        //this.LEDestado = response.data.results;
+                        this.LEDestado = response.body;
+                    });
+                },
+                sentData: function () {
+                    this.$http.get('http://192.168.0.7/led2;').then(function (response) {
+                        //this.LEDestado = response.data.results;
+                        this.getData();
+                        //console.log(this.LEDestado.estadoLED2);
+
+                    });
+                },
+
+                sentData2: function () {
+                    this.$http.get('http://192.168.0.7/led3     ;').then(function (response) {
+                        //this.LEDestado = response.data.results;
+                        this.getData();
+                        //console.log(this.LEDestado.estadoLED2);
+
+                    });
+                }
+            }
+
+        });
+
+
+    </script>
+
+</body>
+
+</html>

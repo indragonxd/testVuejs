@@ -1,0 +1,40 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div id="app" class="container">
+
+        <h2>{{titulo}}</h2>
+        <input type="text" placeholder="Ingrese nueva Tarea" v-model='nuevaTarea' class="form-control"
+            @keyup.enter='agregarTarea'>
+        <button class="btn btn-primary" v-on:click='agregarTarea'>Agregar</button>
+
+        <div class="my-3" v-for='(tarea,index) of tareas'>
+            <div class="d-flex justify-content-between" :class="[tarea.estado?'bg-success':'bg-danger','alert']" >
+                <div>{{index+1}}.{{tarea.tarea}}</div>
+                <div>
+                    <button class="btn btn-success btn-sm" @click='editarTarea(tarea,index)'>OK</button>
+                    <button class="btn btn-danger btn-sm" @click='eliminarTarea(tarea)'>X</button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="vue.js"></script>
+</body>
+
+</html>
